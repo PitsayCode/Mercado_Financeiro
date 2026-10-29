@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="grafite">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radar de Notícias</title>
+  <script>
+    // aplica tema e tamanho de letra antes de desenhar (evita "piscar")
+    try {
+      const t = JSON.parse(localStorage.getItem("radar_tema") || "null");
+      if (t) document.documentElement.dataset.tema = t;
+      const f = JSON.parse(localStorage.getItem("radar_fonte") || "null");
+      if (f) document.documentElement.dataset.fonte = f;
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <span class="logo">◎</span>
+      <div>
+        <h1>Radar de Notícias</h1>
+        <p class="sub">O que está saindo agora e como afeta o dólar (WDO) e o índice (WIN)</p>
+      </div>
+    </div>
+    <div class="direita">
+      <button class="icone-btn" id="atualizar" title="Buscar notícias agora">↻ Atualizar</button>
+      <button class="icone-btn" id="btn-tema" title="Trocar tema">◐ Tema</button>
+      <button class="icone-btn" id="btn-fonte" title="Tamanho da letra">A↕</button>
+    </div>
+  </header>
+
+  <main>
+    <p class="status" id="status">Carregando notícias…</p>
+
+    <section class="painel-topo">
+      <div class="card">
+        <p class="rotulo">🧭 Para onde as notícias estão empurrando</p>
+        <div id="pressao">Carregando…</div>
+      </div>
+      <div class="card">
+        <p class="rotulo">🔥 Assuntos do momento</p>
+        <div id="temas">Carregando…</div>
+      </div>
+    </section>
+
+    <section class="filtros">
+      <div class="grupo">
+        <span>Mostrar:</span>
+        <button class="chip" data-imp="alto">Só alto impacto</button>
+        <button class="chip ativo" data-imp="medio">Alto + médio</button>
+        <button class="chip" data-imp="baixo">Todas</button>
+      </div>
+      <div class="grupo">
+        <span>Efeito:</span>
+        <button class="chip ativo" data-ef="todos">Todos</button>
+        <button class="chip" data-ef="wdo-sobe">Dólar ⬆</button>
+        <button class="chip" data-ef="wdo-cai">Dólar ⬇</button>
+        <button class="chip" data-ef="win-sobe">Índice ⬆</button>
+        <button class="chip" data-ef="win-cai">Índice ⬇</button>
+      </div>
+      <input type="search" id="busca" placeholder="Buscar (ex.: Copom, payroll, Datafolha)">
+    </section>
+
+    <section id="lista" class="lista"></section>
+  </main>
+
+  <footer class="aviso">
+    O efeito mostrado em cada notícia é a <b>reação mais comum</b> do mercado a esse tipo de notícia, calculada por regras de economia.
+    Não é previsão nem recomendação de compra ou venda. O que move o preço é a surpresa em relação ao esperado: confira sempre no gráfico.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
